@@ -24,12 +24,12 @@ namespace InputCommand
 		[Header("Xキーのアクション")]
 		[SerializeField] private Action actionKeyX = Action.Jump;
 
-		private PlayerCommand commandKeyZ;
-		private PlayerCommand commandKeyX;
+		private IPlayerCommand commandKeyZ;
+		private IPlayerCommand commandKeyX;
 		
-		private Queue<PlayerCommand> commandQueue = new Queue<PlayerCommand>();
+		private Queue<IPlayerCommand> commandQueue = new Queue<IPlayerCommand>();
 
-		public void EnqueueCommand(PlayerCommand command)
+		public void EnqueueCommand(IPlayerCommand command)
 		{
 			commandQueue.Enqueue(command);
 		}
@@ -40,7 +40,7 @@ namespace InputCommand
 			commandKeyX = GenerateCommand(actionKeyX);
 		}
 
-		public PlayerCommand GenerateCommand(Action action)
+		public IPlayerCommand GenerateCommand(Action action)
 		{
 			switch (action)
 			{
@@ -72,7 +72,7 @@ namespace InputCommand
 			{
 				return;
 			}
-			PlayerCommand command = commandQueue.Dequeue();
+			IPlayerCommand command = commandQueue.Dequeue();
 			command.Execute(this);
 		}
 	}

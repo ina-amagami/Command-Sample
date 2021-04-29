@@ -3,17 +3,17 @@ using UnityEngine;
 namespace InputCommand
 {
 	/// <summary>
-	/// プレイヤー用コマンドの抽象クラス
+	/// プレイヤー用コマンドのインタフェース
 	/// </summary>
-	public abstract class PlayerCommand
+	public interface IPlayerCommand
 	{
-		public abstract void Execute(Player player);
+		void Execute(Player player);
 	}
 
 	/// <summary>
 	/// ジャンプ
 	/// </summary>
-	public class JumpCommand : PlayerCommand
+	public class JumpCommand : IPlayerCommand
 	{
 		private float force;
 
@@ -22,7 +22,7 @@ namespace InputCommand
 			this.force = force;
 		}
 
-		public override void Execute(Player player)
+		void IPlayerCommand.Execute(Player player)
 		{
 			var rigidbody = player.GetComponent<Rigidbody>();
 			rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
@@ -32,7 +32,7 @@ namespace InputCommand
 	/// <summary>
 	/// 発射コマンド
 	/// </summary>
-	public class FireCommand : PlayerCommand
+	public class FireCommand : IPlayerCommand
 	{
 		private GameObject bulletPrefab;
 		private float force;
@@ -43,7 +43,7 @@ namespace InputCommand
 			this.force = force;
 		}
 
-		public override void Execute(Player player)
+		void IPlayerCommand.Execute(Player player)
 		{
 			var bullet = Object.Instantiate(bulletPrefab);
 			bullet.transform.position = player.transform.position;

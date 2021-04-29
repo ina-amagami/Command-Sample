@@ -13,8 +13,8 @@ namespace InputCommand
         private int commandIndex = 0;
 
         private Player target;
-        private PlayerCommand jumpCommand;
-        private PlayerCommand fireCommand;
+        private IPlayerCommand jumpCommand;
+        private IPlayerCommand fireCommand;
         private float waitEndAt;
 
         private void Start()
