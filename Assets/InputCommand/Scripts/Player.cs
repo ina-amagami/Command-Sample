@@ -45,12 +45,27 @@ namespace InputCommand
 			switch (action)
 			{
 				case Action.Jump:
-					return new JumpCommand(jumpForce);
+					return new JumpCommand();
 
 				case Action.Fire:
-					return new FireCommand(bulletPrefab, bulletForce);
+					return new FireCommand();
 			}
 			return null;
+		}
+
+		public void Jump()
+		{
+			var rigidbody = GetComponent<Rigidbody>();
+			rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+		}
+
+		public void Fire()
+		{
+			var bullet = Instantiate(bulletPrefab);
+			bullet.transform.position = transform.position;
+
+			var rigidbody = bullet.GetComponent<Rigidbody>();
+			rigidbody.AddForce(Vector3.right * bulletForce, ForceMode.Impulse);
 		}
 
 		private void HundleInput()

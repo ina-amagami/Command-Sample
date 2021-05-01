@@ -21,8 +21,8 @@ namespace InputCommand
         {
             target = GetComponent<Player>();
 
-            jumpCommand = target.GenerateCommand(Player.Action.Jump);
-            fireCommand = target.GenerateCommand(Player.Action.Fire);
+            jumpCommand = new JumpCommand();
+            fireCommand = new FireCommand();
 
             commandInfos = demoData.CommandInfos;
         }
