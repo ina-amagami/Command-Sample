@@ -26,7 +26,8 @@ namespace InputCommand
 
 		private IPlayerCommand commandKeyZ;
 		private IPlayerCommand commandKeyX;
-		
+
+		// Queue = 先入れ先出しリスト
 		private Queue<IPlayerCommand> commandQueue = new Queue<IPlayerCommand>();
 
 		public void EnqueueCommand(IPlayerCommand command)

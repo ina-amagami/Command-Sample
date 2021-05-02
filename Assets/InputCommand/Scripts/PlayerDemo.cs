@@ -13,17 +13,12 @@ namespace InputCommand
         private int commandIndex = 0;
 
         private Player target;
-        private IPlayerCommand jumpCommand;
-        private IPlayerCommand fireCommand;
+        private Dictionary<int, IPlayerCommand> commandDic = new Dictionary<int, IPlayerCommand>();
         private float waitEndAt;
 
         private void Start()
         {
             target = GetComponent<Player>();
-
-            jumpCommand = new JumpCommand();
-            fireCommand = new FireCommand();
-
             commandInfos = demoData.CommandInfos;
         }
 
@@ -43,16 +38,12 @@ namespace InputCommand
             }
 			else
             {
-                switch (info.Action)
+                if (!commandDic.TryGetValue((int)info.Action, out IPlayerCommand command))
                 {
-                    case Player.Action.Jump:
-                        target.EnqueueCommand(jumpCommand);
-                        break;
-
-                    case Player.Action.Fire:
-                        target.EnqueueCommand(fireCommand);
-                        break;
+                    command = target.GenerateCommand(info.Action);
+                    commandDic.Add((int)info.Action, command);
                 }
+                target.EnqueueCommand(command);
             }
             commandIndex++;
             commandIndex = commandIndex % commandInfos.Count;
